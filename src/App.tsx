@@ -7,6 +7,7 @@ const App: React.FC = () => {
 
   const handleExecTest = async () => {
     const res = await execTest();
+    console.log('API URL:', process.env.REACT_APP_API_URL); // テストロジック
 
     if (res.status === 200) {
       setMessage(res.data.message)
