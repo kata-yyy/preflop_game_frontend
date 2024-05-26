@@ -4,6 +4,9 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 import Typography from '@material-ui/core/Typography';
 import Hand from 'components/preflop_game/Hand';
 import GameStartButton from 'components/preflop_game/GameStartButton';
+import ActionButton from 'components/preflop_game/ActionButton';
+import NextButton from 'components/preflop_game/NextButton';
+import Answer from 'components/preflop_game/Answer';
 import { Action, CardObj, Question } from "interfaces/preflop_game";
 import { card_num, card_suit, pair_nums, suited_nums, off_suited_nums, suited_suits, off_suited_suits, preflop_hand_table } from 'data/preflop_game';
 
@@ -19,8 +22,25 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  positionArea: {
+    height: '60px',
+    width: '800px',
+    margin: '0 auto',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   actionButtonArea: {
     height: '100px',
+    width: '800px',
+    margin: '0 auto',
+  },
+  flexContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  answerArea: {
+    height: '50px',
     width: '800px',
     margin: '0 auto',
   },
@@ -33,6 +53,7 @@ const PreflopGame: React.FC = () => {
   const [isStartButtonDisplay, setIsStartButtonDisplay] = useState<boolean>(true);
   const [isActionButtonDisplay, setIsActionButtonDisplay] = useState<boolean>(false);
   const [isAnswerDisplay, setIsAnswerDisplay] = useState<boolean>(false);
+  const [isNextButtonDisplay, setIsNextButtonDisplay] = useState<boolean>(false);
   const [question, setQuestion] = useState<Question>({ hand: [], correct_action: null });
   const [answer, setAnswer] = useState<string>("");
   
@@ -100,6 +121,14 @@ const PreflopGame: React.FC = () => {
     setIsActionButtonDisplay(false);
   };
 
+  const nextButtonDisplay = (): void => {
+    setIsNextButtonDisplay(true);
+  };
+
+  const nextButtonHide = (): void => {
+    setIsNextButtonDisplay(false);
+  };
+
   const answerDisplay = (ans: string): void => {
     setAnswer(ans);
     setIsAnswerDisplay(true);
@@ -123,6 +152,11 @@ const PreflopGame: React.FC = () => {
         }
         {isHandDisplay && <Hand hand={question.hand} />}
       </Box>
+      <Box className={classes.positionArea}>
+        <Typography style={{ fontSize: '2rem' }}>
+          ポジション　BTN
+        </Typography>
+      </Box>
       <Box className={classes.actionButtonArea}>
         {
           isStartButtonDisplay &&
@@ -133,6 +167,53 @@ const PreflopGame: React.FC = () => {
             startButtonHide={startButtonHide}
             actionButtonDisplay={actionButtonDisplay}
             answerHide={answerHide}
+          />
+        }
+        {
+          isActionButtonDisplay &&
+          <Box className={classes.flexContainer}>
+            <ActionButton
+              action={"Fold"}
+              correct_action={question.correct_action}
+              actionButtonHide={actionButtonHide}
+              nextButtonDisplay={nextButtonDisplay}
+              answerDisplay={answerDisplay}
+            />
+            <ActionButton
+              action={"Call"}
+              correct_action={question.correct_action}
+              actionButtonHide={actionButtonHide}
+              nextButtonDisplay={nextButtonDisplay}
+              answerDisplay={answerDisplay}
+            />
+            <ActionButton
+              action={"Raise"}
+              correct_action={question.correct_action}
+              actionButtonHide={actionButtonHide}
+              nextButtonDisplay={nextButtonDisplay}
+              answerDisplay={answerDisplay}
+            />
+          </Box>
+        }
+        {
+          isNextButtonDisplay &&
+          <Box className={classes.flexContainer}>
+            <NextButton
+              handDisplay={handDisplay}
+              randomHandGenerate={randomHandGenerate}
+              nextButtonHide={nextButtonHide}
+              actionButtonDisplay={actionButtonDisplay}
+              answerHide={answerHide}
+            />
+          </Box>
+        }
+      </Box>
+      <Box className={classes.answerArea}>
+        {
+          isAnswerDisplay &&
+          <Answer 
+            answer={answer}
+            correct_action={question.correct_action}
           />
         }
       </Box>
