@@ -8,6 +8,7 @@ import SignIn from "components/pages/SignIn";
 
 import { getCurrentUser } from "lib/api/auth";
 import { User } from "interfaces/index";
+import PreflopGame from "components/pages/PreflopGame"
 
 // グローバルで扱う変数・関数
 export const AuthContext = createContext({} as {
@@ -72,7 +73,7 @@ const App: React.FC = () => {
             <Route exact path="/signin" component={SignIn} />
             <Private>
               <Switch>
-                <Route exact path="/" component={Home} />
+                <Route exact path="/" component={PreflopGame} />
               </Switch>
             </Private>
           </Switch>
