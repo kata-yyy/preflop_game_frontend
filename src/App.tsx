@@ -71,11 +71,7 @@ const App: React.FC = () => {
           <Switch>
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/signin" component={SignIn} />
-            <Private>
-              <Switch>
-                <Route exact path="/" component={PreflopGame} />
-              </Switch>
-            </Private>
+            <Route exact path="/" component={PreflopGame} />
           </Switch>
         </CommonLayout>
       </AuthContext.Provider>
