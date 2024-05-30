@@ -87,25 +87,48 @@ const Header: React.FC = () => {
     }
   };
 
+  const MypageButton = () => {
+    if (!loading) {
+      if (isSignedIn) {
+        return (
+          <Button
+            component={Link}
+            to="/mypage"
+            color="inherit"
+            className={classes.linkBtn}
+          >
+            マイページ
+          </Button>
+        )
+      } else {
+        return <></>
+      }
+    } else {
+      return <></>
+    }
+  };
+
   return (
     <>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.iconButton}
-            color="inherit"
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography
             component={Link}
             to="/"
             variant="h6"
             className={classes.title}
           >
-            Sample
+            Poker Learning
           </Typography>
+          <Button
+            component={Link}
+            to="/"
+            color="inherit"
+            className={classes.linkBtn}
+          >
+            ホーム
+          </Button>
+          <MypageButton />
           <AuthButtons />
         </Toolbar>
       </AppBar>
