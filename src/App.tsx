@@ -2,9 +2,9 @@ import React, { useState, useEffect, createContext } from "react";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
 import CommonLayout from "components/layouts/CommonLayout";
-import Home from "components/pages/Home";
 import SignUp from "components/pages/SignUp";
 import SignIn from "components/pages/SignIn";
+import Mypage from "components/pages/Mypage";
 
 import { getCurrentUser } from "lib/api/auth";
 import { User } from "interfaces/index";
@@ -32,7 +32,7 @@ const App: React.FC = () => {
       const res = await getCurrentUser();
       console.log(res);
 
-      if (res?.status === 200) {
+      if (res?.data.status === 200) {
         setIsSignedIn(true);
         setCurrentUser(res?.data.currentUser);
       } else {
@@ -71,6 +71,7 @@ const App: React.FC = () => {
           <Switch>
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/signin" component={SignIn} />
+            <Route exact path="/mypage" component={Mypage} />
             <Route exact path="/" component={PreflopGame} />
           </Switch>
         </CommonLayout>
