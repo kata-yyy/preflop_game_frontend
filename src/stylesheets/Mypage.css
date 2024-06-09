@@ -1,0 +1,39 @@
+.table-container {
+  padding: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+  cursor: pointer; /* マウスカーソルをポインタに変更 */
+}
+
+.table th {
+  background-color: #f2f2f2;
+}
+
+.table td:hover {
+  background-color: #e0e0e0; /* ホバー時に背景色を変更 */
+}
+
+/* 追加するスタイル */
+.table .cell-raise {
+  background-color: red;
+  color: white;
+}
+
+.table .cell-fold {
+  background-color: blue;
+  color: white;
+}
+
+.table .cell-call {
+  background-color: yellow;
+  color: black;
+}
