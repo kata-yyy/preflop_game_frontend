@@ -1,18 +1,30 @@
 import React, { useState } from 'react';
 import 'stylesheets/Mypage.css';
 import { Action } from 'interfaces/preflop_game';
+import { hand_table_cells } from 'data/preflop_game';
+import { preflop_hand_table } from 'data/preflop_game';
+import { HandTable } from 'interfaces/preflop_game';
 
 const Mypage: React.FC = () => {
-  const rows: string[] = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"]
-  const columns: string[] = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"]
+  const rows: string[] = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"];
+  const columns: string[] = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"];
 
-  // 10x10のマスの状態を管理するための配列
-  const [grid, setGrid] = useState<Action[][]>(
-    Array.from({ length: 13 }, () => Array(13).fill("Call"))
-  );
+  // レンジ表のアクションを初期化
+  const initialGrid = (): Action[][] => {
+    const hand_table: Action[][] = Array.from({ length: 13 }, () => Array(13).fill("Call"));
+    for (let i = 0; i < 13; i++) {
+      for (let j = 0; j < 13; j++) {
+        hand_table[i][j] = preflop_hand_table[hand_table_cells[i][j]]
+      }
+    }
+    return hand_table;
+  };
+
+  // レンジ表のアクションを管理するための配列
+  const [grid, setGrid] = useState<Action[][]>(initialGrid());
 
   // 次の文字を取得する関数
-  const getNextCharacter = (current_action: Action): Action => {
+  const getNextAction = (current_action: Action): Action => {
     const actions: Action[] = ["Call", "Raise", "Fold"];
     const current_index: number = actions.indexOf(current_action);
     return actions[(current_index + 1) % actions.length];
@@ -23,7 +35,7 @@ const Mypage: React.FC = () => {
     const newGrid = grid.map((row, rIdx) =>
       row.map((cell, cIdx) => {
         if (rIdx === rowIndex && cIdx === colIndex) {
-          return getNextCharacter(cell);
+          return getNextAction(cell);
         }
         return cell;
       })
@@ -43,6 +55,16 @@ const Mypage: React.FC = () => {
       default:
         return '';
     }
+  };
+
+  const testButtonClicked = () => {
+    const hand_table_test: HandTable = {};
+    for (let i = 0; i < 13; i++) {
+      for (let j = 0; j < 13; j++) {
+        hand_table_test[hand_table_cells[i][j]] = grid[i][j]
+      }
+    }
+    console.log(hand_table_test);
   };
 
   return (
@@ -66,13 +88,14 @@ const Mypage: React.FC = () => {
                   className={getCellClassName(grid[rowIndex][colIndex])}
                   onClick={() => handleCellClick(rowIndex, colIndex)}
                 >
-                  {grid[rowIndex][colIndex]}
+                  {hand_table_cells[rowIndex][colIndex]}
                 </td>
               ))}
             </tr>
           ))}
         </tbody>
       </table>
+      <button onClick={testButtonClicked}>テスト</button>
     </div>
   );
 };

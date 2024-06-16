@@ -12,15 +12,18 @@
   padding: 8px;
   text-align: center;
   cursor: pointer; /* マウスカーソルをポインタに変更 */
+  width: 30px; /* セルの幅を固定 */
+  white-space: nowrap; /* テキストの折り返しを防止 */
+  user-select: none;
 }
 
 .table th {
   background-color: #f2f2f2;
 }
 
-.table td:hover {
-  background-color: #e0e0e0; /* ホバー時に背景色を変更 */
-}
+/* .table td:hover { */
+/*  background-color: #e0e0e0; */ /* ホバー時に背景色を変更 */
+/* } */
 
 /* 追加するスタイル */
 .table .cell-raise {
